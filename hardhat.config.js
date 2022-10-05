@@ -19,6 +19,7 @@ module.exports = {
         hardhat: {
             chainId: 31337,
             blockConfirmations: 1,
+            allowUnlimitedContractSize: true,
         },
         rinkeby: {
             chainId: 4,
@@ -35,6 +36,7 @@ module.exports = {
         localhost: {
             chainId: 31337,
             blockConfirmations: 1,
+            allowUnlimitedContractSize: true,
         },
     },
     etherscan: {
