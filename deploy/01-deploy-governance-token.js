@@ -1,4 +1,4 @@
-const { network } = require("hardhat");
+const { network, ethers } = require("hardhat");
 const { developmentChains } = require("../helper-hardhat-config");
 const { verify } = require("../utils/verify");
 
@@ -17,6 +17,16 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         log("Verifying...");
         await verify(governanceToken.address, args);
     }
+
+    await delegate(governanceToken.address, deployer);
+    log("Delegated!");
+};
+
+const delegate = async function (governanceTokenAddress, delegatedAccount) {
+    const governanceToken = await ethers.getContractAt("GovernanceToken", governanceTokenAddress);
+    const tx = await governanceToken.delegate(delegatedAccount);
+    tx.wait(1);
+    console.log(`Checkpoints ${await governanceToken.numCheckpoints(delegatedAccount)}`);
 };
 
 module.exports.tags = ["all", "governanceToken"];
